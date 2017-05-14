@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+  <display-name>era</display-name>
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>/WEB-INF/applicationContext.xml</param-value>
+  </context-param>
+  
+  <!-- log4j context-param and listener -->
+  <!-- 如果log4j.properties配置文件不是在classpath路径下，就需要在此指定路径 -->
+	<!-- <context-param>
+		<param-name>log4jConfigLocation</param-name>
+		<param-value>/WEB-INF/log4j.properties</param-value>
+	</context-param>
+	<context-param>
+		<param-name>log4jRefreshInterval</param-name>
+		<param-value>6000</param-value>
+	</context-param>
+	<listener>
+		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+	</listener> -->
+	<!-- log4j context-param and listener -->
+  
+  <filter>
+    <filter-name>encodingFilter</filter-name>
+    <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+    <!-- <filter-class>com.cn.util.FilterUtil</filter-class> -->
+    <async-supported>true</async-supported>
+    <init-param>
+      <param-name>encoding</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>encodingFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  <!-- <listener>
+    <listener-class>com.cn.util.ServletContextListenerUtil</listener-class>
+  </listener> -->
+  <listener>
+    <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
+  </listener>
+  <servlet>
+    <servlet-name>SpringMVC</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>/WEB-INF/spring-mvc.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+    <async-supported>true</async-supported>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SpringMVC</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+  <!-- 启用Web监控统计功能需要在Web应用的web.xml中加入这个Servlet声明 -->
+  <servlet>
+      <servlet-name>DruidStatView</servlet-name>
+      <servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>
+      <init-param>  
+	    <!-- 是否允许清空统计数据   -->
+	    <param-name>resetEnable</param-name>  
+	    <param-value>true</param-value>  
+	    </init-param>  
+	    <init-param>  
+	    <!-- 用户名   -->
+	    <param-name>loginUsername</param-name>  
+	    <param-value>druid</param-value>  
+	    </init-param>  
+	    <init-param>  
+	    <!-- 密码    -->
+	    <param-name>loginPassword</param-name>  
+	    <param-value>123456</param-value>  
+	  </init-param>  
+  </servlet>
+  <servlet-mapping>
+      <servlet-name>DruidStatView</servlet-name>
+      <url-pattern>/druid/*</url-pattern>
+  </servlet-mapping>
+  <!-- 定时任务初始化 -->
+  <!-- <servlet>
+   <servlet-name>quarzInitServlet</servlet-name>
+   <servlet-class>com.cn.servlet.QuarzInitServlet</servlet-class>
+  </servlet> 
+  <servlet-mapping>
+    <servlet-name>quarzInitServlet</servlet-name>
+    <url-pattern>/quarzInitServlet</url-pattern>
+  </servlet-mapping> -->
+  <!-- session过期时长 -->
+  <session-config> 
+    <session-timeout>60</session-timeout> 
+  </session-config> 
+  <welcome-file-list>
+    <welcome-file>/WEB-INF/jsp/index.jsp</welcome-file>
+  </welcome-file-list>
+  <error-page>
+    <error-code>404</error-code>
+    <location>/WEB-INF/jsp/error.jsp</location>
+  </error-page>
+  <error-page>
+    <error-code>400</error-code>
+    <location>/WEB-INF/jsp/error.jsp</location>
+  </error-page>
+  <error-page>
+    <error-code>500</error-code>
+    <location>/WEB-INF/jsp/error.jsp</location>
+  </error-page>
+</web-app>
