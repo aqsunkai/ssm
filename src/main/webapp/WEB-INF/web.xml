@@ -6,6 +6,7 @@
     <param-value>/WEB-INF/applicationContext.xml</param-value>
   </context-param>
   
+  
   <!-- log4j context-param and listener -->
   <!-- 如果log4j.properties配置文件不是在classpath路径下，就需要在此指定路径 -->
 	<!-- <context-param>
